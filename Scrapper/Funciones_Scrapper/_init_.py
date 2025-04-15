@@ -1,0 +1,2 @@
+from.Scrapping import Scrapper
+from.Alertas_extrac import almacenar_alertas
