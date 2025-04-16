@@ -3,10 +3,9 @@ import json
 import time
 from datetime import datetime
 from Funciones_Scrapper.Alertas_extrac import almacenar_alertas
-Alertas_json = []
-Jams_json = []
 def Scrapper(nombres, tops, bottoms, lefts, rights):
     Alertas_Totales = 0
+    Trafico_Total = 0
     for i in range(len(nombres)):   
 
         top, bottom, left, right = tops[i], bottoms[i], lefts[i], rights[i] #variables
@@ -21,8 +20,11 @@ def Scrapper(nombres, tops, bottoms, lefts, rights):
 
             Alertas = len(data.get("alerts", [])) # Recuperar cantidad de alertas 
             Alertas_trafico = len(data.get("jams", [])) # Recuperar cantidad de alertas de trafico
+
             # Extraccion de los datos que necesitamos
             fecha_actual = datetime.now().isoformat() # Fecha actual
+            Alertas_json = []
+            Jams_json = []
 
             for alerta in Alertas_data: # Extaccion de las alertas
 
@@ -38,13 +40,10 @@ def Scrapper(nombres, tops, bottoms, lefts, rights):
                 Jams_json.append(trafico)
 
             print(f"Alertas totales en la Comuna: {nombres[i]} son {Alertas_trafico} y {Alertas}")
-            with open(f"Alertas_waze_{nombres[i]}.json", "w", encoding="utf-8") as json_file_alertas:
-                json.dump(Alertas_json, json_file_alertas, indent=4, ensure_ascii=False)
-    # Guardar los datos de jams en su archivo JSON          
-            with open(f"Jams_waze_{nombres[i]}.json", "w", encoding="utf-8") as json_file_jams:
-                json.dump(Jams_json, json_file_jams, indent=4, ensure_ascii=False)
+            Alertas_Totales += Alertas # Sumar las alertas de cada comuna
+            Trafico_Total += Alertas_trafico # Sumar las alertas de trafico de cada comuna
         except:
             print(f"Error en recuperar datos en la comuna: {nombres[i]}")  
         time.sleep(2) #Para que no rechaze las peticiones el servidor
-    print(f"Alertas totales son {Alertas_Totales}")
+    print(f"Alertas totales son {Alertas_Totales}, las de trafico son {Trafico_Total} y todas juntas son {Alertas_Totales + Trafico_Total}")
     
