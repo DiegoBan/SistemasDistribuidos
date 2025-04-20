@@ -1,7 +1,5 @@
-import requests
-import json
-import time
 from Funciones_Scrapper.Scrapping import Scrapper
+
 #   Datos por comuna
 nombres = [
     "Santiago Centro", "Ñuñoa", "Providencia", "Las Condes", "Vitacura", "La Reina", "Peñalolén",

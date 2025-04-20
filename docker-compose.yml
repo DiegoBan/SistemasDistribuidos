@@ -1,0 +1,19 @@
+services:
+    mongo:
+        image: mongo
+        container_name: distribuidos_db
+        ports:
+            -  "27017:27017"
+        volumes:
+            -  ./Almacenamiento:/data/db
+    scrapper:
+        build:
+            context: ./Scrapper
+            dockerfile: Dockerfile
+        container_name: Scrapper
+        depends_on:
+            -  mongo
+        working_dir: /app
+        volumes:
+            -  ./Scrapper:/app
+        command: python Web_Scrapper.py

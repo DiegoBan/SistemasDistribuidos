@@ -1,14 +1,15 @@
-import requests 
-import time
-import csv
+from pymongo import MongoClient
 
-def almacenar_alertas(alertas,nombre_archivo):
-    if alertas:
-        keys = alertas[0].keys()
-        with open(nombre_archivo, "w", newline="", encoding="utf-8") as archivo_csv:
-            writer = csv.DictWriter(archivo_csv, fieldnames=keys)
-            writer.writeheader()
-            writer.writerows(alertas)
-        print(f"📁 Se guardaron {len(alertas)} alertas en {nombre_archivo}")
+def almacenar_alertas(data, dataType):
+    if len(data) > 0:
+        try:
+            client = MongoClient("mongo", 27017)
+            db = client["SD_db"]
+            coleccion = db[dataType]
+            respuesta = coleccion.insert_many(data)
+            if len(respuesta.inserted_ids) > 0:
+                print(f"Se insertaron correctamente {len(respuesta.inserted_ids)} del tipo {dataType}")
+        except:
+            print("Error al insertar los datos en la base de datos")
     else:
-        print(f"⚠️ No hay alertas para guardar en {nombre_archivo}.")
+        print(f"No hay data del tipo {dataType}")
