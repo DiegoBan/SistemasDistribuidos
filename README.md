@@ -40,6 +40,12 @@ Al inicializar el entorno de docker-compose, automaticamente se realiza una ejec
 docker-compose run scrapper
 ```
 
+Y para ver los outputs que entrega (a través de prints) el contenedor que ejecuta el scrapper, se puede realizar a través de:
+
+```bash
+docker-compose logs scrapper
+```
+
 ##  Almacenamiento
 
 Para el almacenamiento se utilizó la base de datos noSQL mongoDB, a través de su imagen oficial de Docker, abriendola en el puerto "27017" y creando un volumen (para el guardado de datos local) en la carpeta "./Almacenamiento:/data/db".
