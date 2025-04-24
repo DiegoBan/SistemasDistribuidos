@@ -6,7 +6,7 @@ Profesor: Nicolás Hidalgo.
 
 Alumnos: Diego Banda, Dante Hortuvia.
 
-Ayudantes: César Muñoz, Joaquín Villegas
+Ayudantes: César Muñoz, Joaquín Villegas.
 
 ### Uso de Docker
 
@@ -33,17 +33,17 @@ Asegurate de tener instalado Docker y Docker Compose antes de iniciar el proyect
 
 ##  Scrapper
 
-El scrapper obtiene información desde la página de `[Waze](https://www.waze.com/es-419/live-map/)`, obteniendo desde cada comuna de la región metropolitana sus alertas y tráfico del momento, para posteriormente guardarlo en el Almacenamiento.
-Al inicializar el entorno de docker-compose, automaticamente se realiza una ejecuión del Scrapper, añadiendo más datos a la base de datos, sin embargo, si el entorno ya está levantado y se desea realizar otra ejecución, esta puede ser a través de:
+El scrapper obtiene información desde la página de [Waze](https://www.waze.com/es-419/live-map/), obteniendo desde cada comuna de la región metropolitana sus alertas y tráfico del momento, para posteriormente guardarlo en el Almacenamiento.
+Al inicializar el entorno de docker-compose, automaticamente se realiza una ejecuión del Scrapper, añadiendo más datos a la base de datos, sin embargo, si el entorno ya está levantado y se desea realizar otra ejecución, se debe entrar a la consola del contenedor a través de:
 
 ```bash
-docker-compose run scrapper
+docker exec -it Scrapper bash
 ```
 
-Y para ver los outputs que entrega (a través de prints) el contenedor que ejecuta el scrapper, se puede realizar a través de:
+Y ejecutar:
 
 ```bash
-docker-compose logs scrapper
+python Web_Scrapper.py
 ```
 
 ##  Almacenamiento

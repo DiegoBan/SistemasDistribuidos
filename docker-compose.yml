@@ -16,4 +16,5 @@ services:
         working_dir: /app
         volumes:
             -  ./Scrapper:/app
-        command: python Web_Scrapper.py
+        stdin_open: true
+        tty: true
