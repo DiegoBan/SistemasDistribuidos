@@ -6,6 +6,11 @@ services:
             -  "27017:27017"
         volumes:
             -  ./Almacenamiento:/data/db
+    redis:
+        image: redis:latest
+        container_name: distribuidos_redis
+        ports:
+            - "6379:6379"
     scrapper:
         build:
             context: ./Scrapper
@@ -13,6 +18,7 @@ services:
         container_name: Scrapper
         depends_on:
             -  mongo
+            -  redis
         working_dir: /app
         volumes:
             -  ./Scrapper:/app
