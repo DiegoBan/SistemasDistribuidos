@@ -1,6 +1,8 @@
 import redis 
 import json
 from Configuraciones import Hosteo_Redis, Puerto_Redis#Datos_configuracion_redis  
+
+
 r = redis.Redis(host=Hosteo_Redis, port = Puerto_Redis,decode_responses=True)#Cambiaresta wea
 
 def Obtenerdatos_Cache(LLave):
