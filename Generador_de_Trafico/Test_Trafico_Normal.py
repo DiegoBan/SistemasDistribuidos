@@ -1,7 +1,7 @@
 import requests
 import time
 import numpy
-import ramdom
+import random
 from pymongo import MongoClient
 from tqdm import tqdm
 import matplotlib.pyplot
@@ -32,12 +32,12 @@ Fallas = 0
 # Consultas 
 
 for i in range(Consultas_Totales):
-    tipo = ramdom.choice(["Alerta","Atasco"])
+    tipo = random.choice(["Alerta","Atasco"])
 
     if tipo == "Alerta" :
-        uuid = ramdom.choice(UUID_Alertas)
+        uuid = random.choice(UUID_Alertas)
     elif tipo == "Atasco" :
-        uuid = ramdom.choice(UUID_Atasco)
+        uuid = random.choice(UUID_Atasco)
     else :
         print("ERROR EN EL TIPO")
     try:  

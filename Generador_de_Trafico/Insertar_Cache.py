@@ -1,7 +1,7 @@
 import requests
 import time
 import numpy
-import ramdom
+import random
 from pymongo import MongoClient
 from pymongo.errors import ConnectionFailure
 
@@ -18,8 +18,8 @@ Datos_Totales = 1000
 
 for i in range(Datos_Totales):
 
-    uuid_Alertas = ramdom.choice(UUID_Alertas)
-    uuid_Atasco = ramdom.choice(UUID_Atasco)
+    uuid_Alertas = random.choice(UUID_Alertas)
+    uuid_Atasco = random.choice(UUID_Atasco)
     
     url_Alertas = f"{URL_API}/cache/Alertas/{uuid_Alertas}"
     response_Alertas = requests.get(url_Alertas)
