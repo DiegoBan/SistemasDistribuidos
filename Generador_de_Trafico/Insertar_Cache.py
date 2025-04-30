@@ -15,20 +15,26 @@ collection_Jams = db["Jams"]
 UUID_Alertas = [Alertas["uuid"] for Alertas in db.Alerta.find({}, {"uuid": 1})]
 UUID_Atasco = [Atascos["uuid"] for Atascos in db.Atasco.find({}, {"uuid": 1})]
 Datos_Totales = 1000
+
 for i in range(Datos_Totales):
 
-        uuid_Alertas = ramdom.choice(UUID_Alertas)
-        uuid_Atasco = ramdom.choice(UUID_Atasco)
+    uuid_Alertas = ramdom.choice(UUID_Alertas)
+    uuid_Atasco = ramdom.choice(UUID_Atasco)
+    
+    url_Alertas = f"{URL_API}/cache/Alertas/{uuid_Alertas}"
+    response_Alertas = requests.get(url_Alertas)
 
-        if isInCache(uuid_Alertas) == True :
-                print(f"Datos con ID: {uuid_Alertas} ya existe")
-        else :
-               Datos = collection_Alertas.find_one({"uuid": uuid_Alertas})
-               addKeyValue(uuid_Alertas, Datos)
+    if response_Alertas.status_code == 200:
+        print("Datos Enviados Exitosamente")
+    else:
+        print("Los datos no fueron enviados:", response_Alertas.status_code, response_Alertas.text)
 
-        if isInCache(uuid_Atasco) == True :
-                print(f"Datos con ID: {uuid_Atasco} ya existe")
-        else :
-               Datos_Jams = collection_Jams.find_one({"uuid": uuid_Atasco})
-               addKeyValue(uuid_Atasco, Datos)
+    url_Atascos = f"{URL_API}/cache/Jams/{uuid_Atasco}"
+    response_Atascos = requests.get(url_Atascos)
+    if response_Atascos.status_code == 200:
+        print("Datos Enviados Exitosamente")
+    else:
+        print("Los datos no fueron enviados:", response_Atascos.status_code, response_Atascos.text)
+
+        
 
