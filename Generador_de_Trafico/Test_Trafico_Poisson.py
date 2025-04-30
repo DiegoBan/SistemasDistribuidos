@@ -41,11 +41,10 @@ for i in range(Consultas_Totales):
     else :
         print("ERROR EN EL TIPO")
     try:  
-        Respuesta = requests.get(f"{URL_API}/{tipo}/{uuid}")
-        json_Respuesta = Respuesta.json
-        Origen_Respuesta = json_Respuesta.get("") #indicar donde sale si fue cache o no
-
-        if Origen_Respuesta == "cache" :
+        URL = f"{URL_API}/cache/{tipo}/{uuid}"
+        Respuesta = requests.get(URL)
+        #Json_respuesta = Respuesta.get("") #indicar donde sale si fue cache o no
+        if Respuesta == True :
             Aciertos += 1
         else :
             Fallas += 1
