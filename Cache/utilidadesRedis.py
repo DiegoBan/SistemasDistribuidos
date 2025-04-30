@@ -10,13 +10,48 @@ def redisPing():
     except redis.ConnectionError as e:
         return {"Redis": "No hay conexión", "error": str(e)}
 
-def ObtenerLlave(key):
-    value = redisClient.get(key)
-    if(value):
-        return json.loads(value)
-    else:
-        print(f"Valor de llave {key} no presente en cache")
-        return None
+def startup(policy: str, size: str):
+    try:
+        redisClient.config_set("maxmemory", size)
+        redisClient.config_set("maxmemory-policy", policy)
+    except redis.ConnectionError as e:
+        print(f"Redis error: {e}")
 
-def addKeyValue(key, value, TTL : int):
-    redisClient.setex(key, TTL, json.dumps(value))
+def ObtenerLlave(key):
+    try:
+        value = redisClient.get(key)
+        if(value):
+            return json.loads(value)
+        else:
+            print(f"Valor de llave {key} no presente en cache")
+            return None
+    except redis.ConnectionError as e:
+        return {"Error en Redis": str(e)}
+
+def addKeyValue(key: str, value: str):
+    try:
+        redisClient.setex(key, 5000, json.dumps(value))
+    except redis.ConnectionError as e:
+        return {"Error en Redis": str(e)}
+
+def isInCache(key): #   Verifica si una llave está en cache o no
+    try:
+        return redisClient.exists(key)
+    except redis.ConnectionError as e:
+        return {"Error en Redis": str(e)}
+    
+def changeSize(size: str):
+    try:
+        redisClient.config_set("maxmemory", size)
+        return {"CacheSizeChangedTo": size}
+    except redis.ConnectionError as e:
+        return {"Redis error": e}
+
+def changePolicy():
+    policy = redisClient.config_get("maxmemory-policy")
+    if policy["maxmemory-policy"] == "allkeys-lru":
+        redisClient.config_set("maxmemory-policy", "allkeys-lfu")
+        return {"changedTo": "lfu"}
+    else:
+        redisClient.config_set("maxmemory-policy", "allkeys-lru")
+        return {"changedTo": "lru"}

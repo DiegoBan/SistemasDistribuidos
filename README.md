@@ -60,3 +60,11 @@ Para contar cuantos datos hay en una colección, se puede utilizar lo siguiente 
 ```bash
 db.collection.countDocuments({})
 ```
+
+##  Generador de Tráfico
+
+
+
+##  Sistema de Cache
+
+

@@ -11,7 +11,7 @@ def mongoPing():
     except ConnectionFailure as e:
         return {"MongoDB": "No hay conexión", "error": str(e)}
     
-def getAlerta(alertType: str, eventID: str):
+def getAlerta(alertType: str, eventUUID: str):
     if alertType == "Alerta":
         collection = db["Alertas"]
     elif alertType == "Atasco":
@@ -20,4 +20,4 @@ def getAlerta(alertType: str, eventID: str):
         print(f"[Error] Tipo de alerta no válido: {alertType}")
         return None
     
-    return collection.find_one({"id": eventID})
+    return collection.find_one({"uuid": eventUUID})
