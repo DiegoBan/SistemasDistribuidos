@@ -7,24 +7,28 @@ from tqdm import tqdm
 import matplotlib.pyplot
 
 #Conexiones
-URL_API = ""
+URL_API = "http://cache:8000"
 client = MongoClient("mongo", 27017)
 db = client["SD_db"]
 
 #Variables
-Consultas_Totales = 0 # Ingresar consults totales (tiene problemas desde terminar en docker)
+Consultas_Totales = 10000 # Ingresar consults totales (tiene problemas desde terminar en docker)
 Valor_promedio = 0.3 # Valor promedio de tiempo para los eventos 
 Desviacion_Estandar = 0.1 # Para convertir a segundos mas accesibles 
 
 #Buscar datos bases
-UUID_Alertas = [Alertas["uuid"] for Alertas in db.Alertas.find({}, {"uuid": 1})]
-UUID_Atasco = [Atascos["uuid"] for Atascos in db.Jams.find({}, {"uuid": 1})]
+UUID_Alertas = [Alertas["uuid"] for Alertas in db.Alertas.find({}, {"uuid": 1}).limit(100)]
+UUID_Atasco = [Atascos["uuid"] for Atascos in db.Jams.find({}, {"uuid": 1}).limit(100)]
 
 print(f"{len(UUID_Alertas)} Total de uuid de Alertas")
 print(f"{len(UUID_Atasco)} Total de uuid de Atascos")
 
 def Tiempo_Consultas():
-    return numpy.random.normal(Valor_promedio,Desviacion_Estandar)
+    t = numpy.random.normal(Valor_promedio,Desviacion_Estandar)
+    if t < 0:
+        return -t
+    else:
+        return t
 
 Aciertos = 0
 Fallas = 0
@@ -32,22 +36,24 @@ Fallas = 0
 # Consultas 
 
 for i in range(Consultas_Totales):
-    tipo = random.choice(["Alerta","Atasco"])
+    tipo = random.choice(["Alertas","Jams"])
 
-    if tipo == "Alerta" :
+    if tipo == "Alertas" :
         uuid = random.choice(UUID_Alertas)
-    elif tipo == "Atasco" :
+    elif tipo == "Jams" :
         uuid = random.choice(UUID_Atasco)
     else :
         print("ERROR EN EL TIPO")
     try:  
         URL = f"{URL_API}/cache/{tipo}/{uuid}"
-        Respuesta = requests.get(URL)
+        Respuesta = requests.get(URL).json()
         #Json_respuesta = Respuesta.get("") #indicar donde sale si fue cache o no
-        if Respuesta == True :
+        if Respuesta["result"]:
             Aciertos += 1
+            print(f"encontrado en cache: {uuid}")
         else :
             Fallas += 1
+            print(f"no encontrado en cache: {uuid}")
     except Exception as ERROR :
         print("ERROR EN LA CONSULTA", ERROR)
     
@@ -59,5 +65,5 @@ Radio_Aciertos = (Aciertos/Total) * 100
 print(f"Consultas Ejecutadas : {Total}")
 print(f"Veces encontradas en cache: {Aciertos}")
 print(f"Veces no encontradas en cache: {Fallas}")
-print(f"Radio de aciertos en las consultas: {Radio_Aciertos}")
+print(f"Radio de aciertos en las consultas: {Radio_Aciertos}%")
 

@@ -14,7 +14,7 @@ services:
     scrapper:
         build:
             context: ./Scrapper
-            dockerfile: dockerfile
+            dockerfile: Dockerfile
         container_name: Scrapper
         depends_on:
             -  mongo
@@ -26,8 +26,8 @@ services:
     cache:
         build:
             context: ./Cache
-            dockerfile: dockerfile
-        container_name: Cache
+            dockerfile: Dockerfile
+        container_name: cache
         depends_on:
             -  mongo
             -  redis
@@ -36,5 +36,17 @@ services:
         working_dir: /Cache
         volumes:
             -  ./Cache:/Cache
+        stdin_open: true
+        tty: true
+    generador_de_trafico:
+        build:
+            context: ./Generador_de_Trafico
+            dockerfile: Dockerfile
+        container_name: generador_de_trafico
+        depends_on:
+            -  cache
+        working_dir: /Generador_de_Trafico
+        volumes:
+            -  ./Generador_de_Trafico:/Generador_de_Trafico
         stdin_open: true
         tty: true

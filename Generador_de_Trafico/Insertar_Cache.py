@@ -6,7 +6,7 @@ from pymongo import MongoClient
 from pymongo.errors import ConnectionFailure
 
 #Conexiones
-URL_API = ""
+URL_API = "http://cache:8000"
 client = MongoClient("mongo", 27017)
 db = client["SD_db"]
 collection_Alertas = db["Alertas"]
@@ -14,7 +14,7 @@ collection_Jams = db["Jams"]
 #Buscar datos bases
 UUID_Alertas = [Alertas["uuid"] for Alertas in db.Alertas.find({}, {"uuid": 1})]
 UUID_Atasco = [Atascos["uuid"] for Atascos in db.Jams.find({}, {"uuid": 1})]
-Datos_Totales = 1000
+Datos_Totales = 5000
 
 for i in range(Datos_Totales):
 
@@ -35,6 +35,3 @@ for i in range(Datos_Totales):
         print("Datos Enviados Exitosamente")
     else:
         print("Los datos no fueron enviados:", response_Atascos.status_code, response_Atascos.text)
-
-        
-

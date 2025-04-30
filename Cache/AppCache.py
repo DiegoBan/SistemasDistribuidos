@@ -6,7 +6,7 @@ import utilidadesMongodb
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     print("Inicializando con datos por defecto...") #   Parámetro iniciales de Redis
-    utilidadesRedis.startup("allkeys-lru", "100mb") #   Politica y tamaño
+    utilidadesRedis.startup("allkeys-lru", "1024mb") #   Politica y tamaño
     yield
     print("Adios...")
 app = FastAPI(lifespan=lifespan)
@@ -26,11 +26,11 @@ def mongodbStatus():
 @app.get("/cache/{alertType}/{UUID}")   #   Llamar a este endpoint como consulta a sistema
 def cache(alertType: str, UUID: str):
     if utilidadesRedis.isInCache(UUID): #   Si está en cache retorna true (hit)
-        return True
+        return {"result": True}
     else:   #   Si no está en caché, lo agrega y retorna false (miss)
         value = utilidadesMongodb.getAlerta(alertType, UUID)
         utilidadesRedis.addKeyValue(UUID, value)
-        return False
+        return {"result": False}
 
 @app.get("/cache/changepolicy")  #   Intercambia politica de remoción entre lru y lfu
 def changePolicy():
