@@ -4,7 +4,7 @@ from tabulate import tabulate
 
 # Configuraciones a probar
 policies = ['lru', 'lfu']
-sizes = [128, 256, 512, 1024]  # En MB
+sizes = [128, 256] # potencias de 2: 128, 256, 512, 1024
 
 # Guardar resultados
 resultados = []
