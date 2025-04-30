@@ -14,12 +14,27 @@ services:
     scrapper:
         build:
             context: ./Scrapper
-            dockerfile: Dockerfile
+            dockerfile: dockerfile
         container_name: Scrapper
         depends_on:
             -  mongo
         working_dir: /app
         volumes:
             -  ./Scrapper:/app
+        stdin_open: true
+        tty: true
+    cache:
+        build:
+            context: ./Cache
+            dockerfile: dockerfile
+        container_name: Cache
+        depends_on:
+            -  mongo
+            -  redis
+        ports:
+            -  "8000:8000"
+        working_dir: /Cache
+        volumes:
+            -  ./Cache:/Cache
         stdin_open: true
         tty: true
