@@ -10,11 +10,11 @@ sizes = [128, 256, 512, 1024]  # En MB
 resultados = []
 
 def cambiar_politica():
-    res = requests.get("http://cache:8000/cache/changepolicy")
+    res = requests.get("http://cache:8000/changepolicy")
     print(">> Política cambiada:", res.json())
 
 def cambiar_tamano(size):
-    res = requests.get(f"http://cache:8000/cache/changesize/{size}")
+    res = requests.get(f"http://cache:8000/changesize/{size}")
     print(">> Tamaño cambiado:", res.json())
 
 def ejecutar_test():
@@ -38,7 +38,6 @@ for policy in policies:
     for size in sizes:
         print(f"\n===== Ejecutando prueba: Política={policy.upper()} | Tamaño={size}MB =====")
         
-        cambiar_politica()
         cambiar_tamano(size)
         
         aciertos, fallas, ratio = ejecutar_test()
@@ -50,6 +49,7 @@ for policy in policies:
             "Fallas": fallas,
             "Efectividad (%)": round(ratio, 2)
         })
+    cambiar_politica()
 
 # Mostrar resultados en consola
 print("\n==================== RESULTADOS FINALES ====================")

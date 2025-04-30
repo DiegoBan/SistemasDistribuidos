@@ -50,10 +50,10 @@ for i in range(Consultas_Totales):
         #Json_respuesta = Respuesta.get("") #indicar donde sale si fue cache o no
         if Respuesta["result"]:
             Aciertos += 1
-            print(f"encontrado en cache: {uuid}")
+            #print(f"encontrado en cache: {uuid}")
         else :
             Fallas += 1
-            print(f"no encontrado en cache: {uuid}")
+            #print(f"no encontrado en cache: {uuid}")
     except Exception as ERROR :
         print("ERROR EN LA CONSULTA", ERROR)
     

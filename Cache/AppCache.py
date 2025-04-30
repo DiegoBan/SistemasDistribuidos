@@ -32,10 +32,10 @@ def cache(alertType: str, UUID: str):
         utilidadesRedis.addKeyValue(UUID, value)
         return {"result": False}
 
-@app.get("/cache/changepolicy")  #   Intercambia politica de remoción entre lru y lfu
+@app.get("/changepolicy")  #   Intercambia politica de remoción entre lru y lfu
 def changePolicy():
     return utilidadesRedis.changePolicy()
 
-@app.get("/cache/changesize/{size}")    #   size debe estar en mb
+@app.get("/changesize/{size}")    #   size debe estar en mb
 def changeSize(size: int):
     return utilidadesRedis.changeSize(f"{size}mb")
