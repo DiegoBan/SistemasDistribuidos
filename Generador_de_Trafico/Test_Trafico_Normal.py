@@ -12,13 +12,13 @@ client = MongoClient("mongo", 27017)
 db = client["SD_db"]
 
 #Variables
-Consultas_Totales = 10000 # Ingresar consults totales (tiene problemas desde terminar en docker)
+Consultas_Totales = 20000 # Ingresar consults totales (tiene problemas desde terminar en docker)
 Valor_promedio = 0.3 # Valor promedio de tiempo para los eventos 
 Desviacion_Estandar = 0.1 # Para convertir a segundos mas accesibles 
 
 #Buscar datos bases
-UUID_Alertas = [Alertas["uuid"] for Alertas in db.Alertas.find({}, {"uuid": 1}).limit(100)]
-UUID_Atasco = [Atascos["uuid"] for Atascos in db.Jams.find({}, {"uuid": 1}).limit(100)]
+UUID_Alertas = [Alertas["uuid"] for Alertas in db.Alertas.find({}, {"uuid": 1}).limit(10000)]
+UUID_Atasco = [Atascos["uuid"] for Atascos in db.Jams.find({}, {"uuid": 1}).limit(10000)]
 
 print(f"{len(UUID_Alertas)} Total de uuid de Alertas")
 print(f"{len(UUID_Atasco)} Total de uuid de Atascos")
