@@ -12,8 +12,8 @@ db = client["SD_db"]
 collection_Alertas = db["Alertas"]
 collection_Jams = db["Jams"]
 #Buscar datos bases
-UUID_Alertas = [Alertas["uuid"] for Alertas in db.Alerta.find({}, {"uuid": 1})]
-UUID_Atasco = [Atascos["uuid"] for Atascos in db.Atasco.find({}, {"uuid": 1})]
+UUID_Alertas = [Alertas["uuid"] for Alertas in db.Alertas.find({}, {"uuid": 1})]
+UUID_Atasco = [Atascos["uuid"] for Atascos in db.Jams.find({}, {"uuid": 1})]
 Datos_Totales = 1000
 
 for i in range(Datos_Totales):

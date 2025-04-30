@@ -17,14 +17,14 @@ LAMBDA = 1.5 # Distribucion media para los eventos
 Escala_Segundos = 10 # Para convertir a segundos mas accesibles 
 
 #Buscar datos bases
-UUID_Alertas = [Alertas["uuid"] for Alertas in db.Alerta.find({}, {"uuid": 1})]
-UUID_Atasco = [Atascos["uuid"] for Atascos in db.Atasco.find({}, {"uuid": 1})]
+UUID_Alertas = [Alertas["uuid"] for Alertas in db.Alertas.find({}, {"uuid": 1})]
+UUID_Atasco = [Atascos["uuid"] for Atascos in db.Jams.find({}, {"uuid": 1})]
 
 print(f"{len(UUID_Alertas)} Total de uuid de Alertas")
 print(f"{len(UUID_Atasco)} Total de uuid de Atascos")
 
 def Tiempo_Consultas():
-    return numpy.ramdom.poisson(LAMBDA)/Escala_Segundos
+    return numpy.random.poisson(LAMBDA)/Escala_Segundos
 
 Aciertos = 0
 Fallas = 0
