@@ -17,7 +17,7 @@ def cambiar_tamano(size):
     res = requests.get(f"http://cache:8000/changesize/{size}")
     print(">> Tamaño cambiado:", res.json())
 
-def ejecutar_test():
+def ejecutar_test():    #   Cambiar qué tipo de distribución desea usar
     proceso = subprocess.Popen(['python', 'Test_Trafico_Normal.py'], stdout=subprocess.PIPE, text=True)
     salida = proceso.communicate()[0]
 

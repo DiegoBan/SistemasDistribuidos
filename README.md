@@ -63,8 +63,24 @@ db.collection.countDocuments({})
 
 ##  Generador de Tráfico
 
+El trafico se genera a través de un script de python, el cual utilizando una distribución (Normal o Poisson) genera una cantidad de tráfico cada x tiempo determinado antes de iniciar, envía el tráfico y recibe una resuesta en forma de True o False que significa si estába en caché o no.
+Estos scripts se ejecutan entrando al contendor que tiene estos scripts:
 
+```bash
+docker exec -it generador_de_trafico bash
+```
+
+Una vez en la consola del contenedor que tiene los scripts de python, se debe ejecutar alguno de los dos generadores de tráfico con:
+
+```bash
+python Test_Trafico_Normal.py
+```
+```bash
+python Test_Trafico_Poisson.py
+```
 
 ##  Sistema de Cache
 
-
+Utilizando Redis, se crea una memoria cache (en memoria principal), el cual puede tener distintos tamaños o política de remoción.
+El tamaño de este se puede intercambiar a través de http://0.0.0.0:8000/changesize/{size} (o desde contenedores: http://cache:8000/changesize/{size}), en el cual size es un número que representa el tamaño de la memoria para cache en MB.
+Por otro lado tenemos la política de remoción, las cuales son LRU (Last Recently Use) o LFU (Least Frecuently Use), estas se intercambian entre sí tan solo llamando a http://0.0.0.0:8000/changepolicy (o desde contenedores: http://cache:8000/changepolicy).
