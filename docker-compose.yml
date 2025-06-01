@@ -50,3 +50,34 @@ services:
             -  ./Generador_de_Trafico:/Generador_de_Trafico
         stdin_open: true
         tty: true
+    hadoop:
+        image: bde2020/hadoop-namenode:3.3.6-hadoop3.3.6-java11
+        container_name: distribuidos_hadoop #Definir dsṕ
+        environment:
+            - CLUSTER_NAME=demo-cluster  #Es para Variable de entorno se puede cambiar a toro nombre
+        ports:
+            - "9870:9870"   # UI del NameNode (HDFS)
+            - "8088:8088"   # UI de YARN ResourceManager
+            - "9000:9000"   # RPC del NameNode
+        volumes:
+            - hadoop_namenode:/hadoop/dfs/name # Hace que se guerden los datos cuando se baja el modulo (si se hace docker-compose down -v lo elimina todo)
+        networks: ()
+            - hadoopnet
+        stdin_open: true
+        tty: true
+
+    pig:
+        image: garland/pig
+        container_name: distribuidos_pig #Definir dsp
+        depends_on:
+            - hadoop
+        stdin_open: true
+        tty: true
+        networks:
+            - hadoopnet
+
+    volumes:    
+        hadoop_namenode:
+
+    networks:
+        hadoopnet:
