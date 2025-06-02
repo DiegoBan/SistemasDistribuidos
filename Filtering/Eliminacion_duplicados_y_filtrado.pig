@@ -1,5 +1,5 @@
 -- Cargar datos desde HDFS
-eventos_crudos = LOAD 'hdfs://hadoop:9000/ruta/a/tu/archivo.csv'
+eventos_crudos = LOAD '../datos/alertas.csv'
     USING PigStorage(',') AS (
         uuid:chararray,
         country:chararray,
@@ -36,7 +36,7 @@ eventos_deduplicados = FOREACH agrupados_por_uuid {
 -- Enriquecer con fecha y calcular bloque horario
 eventos_con_fecha = FOREACH eventos_deduplicados GENERATE
     *,
-    ToDate(fecha_actual, 'yyyy-MM-dd''T''HH:mm:ss.SSSSSS') AS fecha_dt;
+    ToDate(fecha_actual, 'yyyy-MM-dd\'T\'HH:mm:ss.SSSSSS') AS fecha_dt;
 
 eventos_con_bloque = FOREACH eventos_con_fecha GENERATE
     *,
@@ -78,5 +78,5 @@ eventos_homogeneizados = FOREACH agrupados_por_tipo_coord_bloque {
 };
 
 -- Guardar resultados
-STORE eventos_homogeneizados INTO 'hdfs://hadoop:9000/salida/eventos_homogeneos'
+STORE eventos_homogeneizados INTO '../datos/pe'
 USING PigStorage(',');

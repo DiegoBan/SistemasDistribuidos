@@ -31,6 +31,8 @@ docker container prune
 
 Asegurate de tener instalado Docker y Docker Compose antes de iniciar el proyecto.
 
+### Entrega 1
+
 ##  Scrapper
 
 El scrapper obtiene información desde la página de [Waze](https://www.waze.com/es-419/live-map/), obteniendo desde cada comuna de la región metropolitana sus alertas y tráfico del momento, para posteriormente guardarlo en el Almacenamiento.
@@ -84,3 +86,11 @@ python Test_Trafico_Poisson.py
 Utilizando Redis, se crea una memoria cache (en memoria principal), el cual puede tener distintos tamaños o política de remoción.
 El tamaño de este se puede intercambiar a través de http://0.0.0.0:8000/changesize/{size} (o desde contenedores: http://cache:8000/changesize/{size}), en el cual size es un número que representa el tamaño de la memoria para cache en MB.
 Por otro lado tenemos la política de remoción, las cuales son LRU (Last Recently Use) o LFU (Least Frecuently Use), estas se intercambian entre sí tan solo llamando a http://0.0.0.0:8000/changepolicy (o desde contenedores: http://cache:8000/changepolicy).
+
+### Entrega 2
+
+## Filtering y Homogeneización
+
+
+
+## Processing

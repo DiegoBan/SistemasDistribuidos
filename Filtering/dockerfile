@@ -1,7 +1,0 @@
-FROM fluddeni/hadoop-pig
-
-WORKDIR /Filtering
-
-COPY . .
-
-CMD ["pig", "Eliminacion_duplicados_y_filtrado.pig"]

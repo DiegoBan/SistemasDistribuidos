@@ -6,6 +6,7 @@ services:
       - "27017:27017"
     volumes:
       - ./Almacenamiento:/data/db
+      - ./data_host:/datos
 
   redis:
     image: redis:latest
@@ -55,38 +56,53 @@ services:
     stdin_open: true
     tty: true
 
-  hadoop:
+  hadoop-namenode:
     image: bde2020/hadoop-namenode:2.0.0-hadoop2.7.4-java8
-    container_name: distribuidos_hadoop
+    container_name: distribuidos_namenode
     environment:
       - CLUSTER_NAME=demo-cluster
+      - CORE_CONF_fs_defaultFS=hdfs://hadoop:9000
     ports:
       - "9870:9870"
-      - "8088:8088"
       - "9000:9000"
     volumes:
       - hadoop_namenode:/hadoop/dfs/name
     networks:
       - hadoopnet
-    stdin_open: true
-    tty: true
+
+  hadoop-datanode:
+    image: bde2020/hadoop-datanode:2.0.0-hadoop2.7.4-java8
+    container_name: distribuidos_datanode
+    environment:
+      - CLUSTER_NAME=demo-cluster
+      - CORE_CONF_fs_defaultFS=hdfs://hadoop:9000
+      - HDFS_CONF_dfs_replication=1
+    ports:
+      - "9864:9864"
+    volumes:
+      - hadoop_datanode:/hadoop/dfs/data
+    networks:
+      - hadoopnet
 
   pig:
     image: fluddeni/hadoop-pig
     container_name: distribuidos_pig
     depends_on:
-      - hadoop
+      - hadoop-namenode
+      - hadoop-datanode
     stdin_open: true
     tty: true
     networks:
       - hadoopnet
     volumes:
       - ./Filtering:/Filtering
+      - ./data_host:/datos
     working_dir: /Filtering
-    command: pig Eliminacion_duplicados_y_filtrado.pig
+    command: ["bash"]
 
 volumes:
   hadoop_namenode:
+  hadoop_datanode:
 
 networks:
   hadoopnet:
