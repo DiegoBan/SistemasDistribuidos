@@ -73,7 +73,11 @@ eventos_homogeneizados = FOREACH agrupados_por_tipo_coord_bloque {
     GENERATE FLATTEN(top_evento);
 };
 
-STORE eventos_homogeneizados INTO '../datos/pe' USING PigStorage(',');
+STORE eventos_homogeneizados INTO '../datos/pe_temp' USING PigStorage(',');
+sh echo "uuid,country,city,street,type,subtype,longitude,latitude,lat_norm,lon_norm,pubMillis,fecha_actual,fecha_dt,bloque_horario,lat_grid,lon_grid" > ../datos/pe.csv;
+sh cat ../datos/pe_temp/part-* >> ../datos/pe.csv;
+
+----------------------------------------------------------
 
 eventos_crudos_atascos = LOAD '../datos/alertas.csv'
     USING PigStorage(',') AS (
@@ -162,4 +166,6 @@ eventos_homogeneizados_atascos = FOREACH agrupados_por_tipo_coord_bloque_atascos
     GENERATE FLATTEN(top_evento);
 };
 
-STORE eventos_homogeneizados_atascos INTO '../datos/pe_atascos' USING PigStorage(',');
+STORE eventos_homogeneizados_atascos INTO '../datos/pe_atascos_temp' USING PigStorage(',');
+sh echo "uuid,severity,country,length,endnode,speed,city,street,type,subtype,longitude,latitude,lat_norm,lon_norm,pubMillis,fecha_actual,fecha_dt,bloque_horario,lat_grid,lon_grid" > ../datos/pe_atascos.csv;
+sh cat ../datos/pe_atascos_temp/part-* >> ../datos/pe_atascos.csv;
