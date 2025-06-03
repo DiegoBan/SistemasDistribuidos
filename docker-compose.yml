@@ -56,9 +56,9 @@ services:
     stdin_open: true
     tty: true
 
-  hadoop-namenode:
+  hadoop:
     image: bde2020/hadoop-namenode:2.0.0-hadoop2.7.4-java8
-    container_name: distribuidos_namenode
+    container_name: distribuidos_hadoop
     environment:
       - CLUSTER_NAME=demo-cluster
       - CORE_CONF_fs_defaultFS=hdfs://hadoop:9000
@@ -69,6 +69,14 @@ services:
       - hadoop_namenode:/hadoop/dfs/name
     networks:
       - hadoopnet
+    entrypoint:
+      - "/bin/bash"
+      - "-c"
+      - |
+        /opt/hadoop-2.7.4/sbin/start-dfs.sh 2>&1 || true
+        sleep 5
+        hdfs dfs -mkdir -p /datos || true
+        tail -f /dev/null
 
   hadoop-datanode:
     image: bde2020/hadoop-datanode:2.0.0-hadoop2.7.4-java8
@@ -88,7 +96,7 @@ services:
     image: fluddeni/hadoop-pig
     container_name: distribuidos_pig
     depends_on:
-      - hadoop-namenode
+      - hadoop
       - hadoop-datanode
     stdin_open: true
     tty: true
@@ -96,7 +104,6 @@ services:
       - hadoopnet
     volumes:
       - ./Filtering:/Filtering
-      - ./data_host:/datos
     working_dir: /Filtering
     command: ["bash"]
 

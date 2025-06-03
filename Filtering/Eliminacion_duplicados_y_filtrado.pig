@@ -1,4 +1,4 @@
-eventos_crudos = LOAD '../datos/alertas.csv'
+eventos_crudos = LOAD 'hdfs://hadoop:9000/alertas.csv'
     USING PigStorage(',') AS (
         uuid:chararray,
         country:chararray,

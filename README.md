@@ -91,6 +91,25 @@ Por otro lado tenemos la política de remoción, las cuales son LRU (Last Recent
 
 ## Filtering y Homogeneización
 
+Su utilizan distintos scripts de pig para realizar un correcto filtrado y homogenización de los datos obtenidos a través del scrapping, para obtener los datos desde la base de datos mongo en un csv que utilizará posteriormente pig, se debe insertarl el siguiente comando:
 
+```bash
+docker exec -it distribuidos_db mongoexport \
+  --host localhost \
+  --db SD_db \
+  --collection Alertas \
+  --type=csv \
+  --fields uuid,country,city,street,type,subtype,location.x,location.y,pubMillis,fecha_subida \
+  --out /datos/alertas.csv
+```
+
+Ahora se tiene el csv en nuestra maquina local, se debe mover a hadoop para su posterior utilización con pig
+
+```bash
+docker exec -it distribuidos_namenode bash -c "\
+  hdfs dfs -mkdir -p /datos && \
+  hdfs dfs -put /datos/alertas.csv /datos/alertas.csv \
+"
+```
 
 ## Processing
