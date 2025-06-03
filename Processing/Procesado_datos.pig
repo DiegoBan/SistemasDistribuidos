@@ -27,7 +27,6 @@ atascos = LOAD '/app/output/pe_atascos.csv' USING PigStorage(',') AS (
     city:chararray,
     street:chararray,
     type:chararray,
-    subtype:chararray,
     longitude:double,
     latitude:double,
     lat_norm:double,

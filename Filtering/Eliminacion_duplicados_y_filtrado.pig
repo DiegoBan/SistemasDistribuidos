@@ -1,4 +1,4 @@
-eventos_crudos = LOAD 'hdfs://hadoop:9000/alertas.csv'
+eventos_crudos = LOAD 'hdfs://hadoop:9000/datos/alertas.csv'
     USING PigStorage(',') AS (
         uuid:chararray,
         country:chararray,
@@ -73,9 +73,9 @@ eventos_homogeneizados = FOREACH agrupados_por_tipo_coord_bloque {
     GENERATE FLATTEN(top_evento);
 };
 
-STORE eventos_homogeneizados INTO '../datos/pe' USING PigStorage(',');
+STORE eventos_homogeneizados INTO 'hdfs://hadoop:9000/datos/alertas_output' USING PigStorage(',');
 
-eventos_crudos_atascos = LOAD '../datos/alertas.csv'
+eventos_crudos_atascos = LOAD 'hdfs://hadoop:9000/datos/jams.csv'
     USING PigStorage(',') AS (
         uuid:chararray,
         severity:int,
@@ -86,7 +86,6 @@ eventos_crudos_atascos = LOAD '../datos/alertas.csv'
         city:chararray,
         street:chararray,
         type:chararray,
-        subtype:chararray,
         longitude:double,
         latitude:double,
         pubMillis:long,
@@ -103,7 +102,6 @@ eventos_validos_atascos = FILTER eventos_crudos_atascos BY
     city IS NOT NULL AND city != '' AND
     street IS NOT NULL AND street != '' AND
     type IS NOT NULL AND type != '' AND
-    subtype IS NOT NULL AND subtype != '' AND
     longitude IS NOT NULL AND longitude >= -180 AND longitude <= 180 AND
     latitude IS NOT NULL AND latitude >= -90 AND latitude <= 90 AND
     pubMillis IS NOT NULL AND
@@ -141,7 +139,6 @@ eventos_normalizados_atascos = FOREACH eventos_con_rejilla_atascos GENERATE
     LOWER(city) AS city,
     LOWER(street) AS street,
     LOWER(type) AS type,
-    LOWER(subtype) AS subtype,
     longitude,
     latitude,
     (latitude + 90) / 180.0 AS lat_norm,
@@ -162,4 +159,4 @@ eventos_homogeneizados_atascos = FOREACH agrupados_por_tipo_coord_bloque_atascos
     GENERATE FLATTEN(top_evento);
 };
 
-STORE eventos_homogeneizados_atascos INTO '../datos/pe_atascos' USING PigStorage(',');
+STORE eventos_homogeneizados_atascos INTO 'hdfs://hadoop:9000/datos/jams_output' USING PigStorage(',');

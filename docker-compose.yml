@@ -69,14 +69,6 @@ services:
       - hadoop_namenode:/hadoop/dfs/name
     networks:
       - hadoopnet
-    entrypoint:
-      - "/bin/bash"
-      - "-c"
-      - |
-        /opt/hadoop-2.7.4/sbin/start-dfs.sh 2>&1 || true
-        sleep 5
-        hdfs dfs -mkdir -p /datos || true
-        tail -f /dev/null
 
   hadoop-datanode:
     image: bde2020/hadoop-datanode:2.0.0-hadoop2.7.4-java8
@@ -104,7 +96,10 @@ services:
       - hadoopnet
     volumes:
       - ./Filtering:/Filtering
+      - ./hadoop-conf:/etc/hadoop/conf:ro
     working_dir: /Filtering
+    environment:
+      HADOOP_CONF_DIR: /etc/hadoop/conf
     command: ["bash"]
 
 volumes:

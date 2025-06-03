@@ -91,8 +91,9 @@ Por otro lado tenemos la política de remoción, las cuales son LRU (Last Recent
 
 ## Filtering y Homogeneización
 
-Su utilizan distintos scripts de pig para realizar un correcto filtrado y homogenización de los datos obtenidos a través del scrapping, para obtener los datos desde la base de datos mongo en un csv que utilizará posteriormente pig, se debe insertarl el siguiente comando:
+Se utiliza un script de pig para realizar la eliminación de duplicados, filtrado y homogenización de los datos obtenidos a través del scrapping, para realizar este proceso, primero se deben obtener los datos desde la base de datos mongoDB en un csv que utilizará posteriormente pig, para ello se deben insertar los siguientes comandos:
 
+1. Obtención de Alertas:
 ```bash
 docker exec -it distribuidos_db mongoexport \
   --host localhost \
@@ -102,14 +103,33 @@ docker exec -it distribuidos_db mongoexport \
   --fields uuid,country,city,street,type,subtype,location.x,location.y,pubMillis,fecha_subida \
   --out /datos/alertas.csv
 ```
-
-Ahora se tiene el csv en nuestra maquina local, se debe mover a hadoop para su posterior utilización con pig
-
+2. Obtención de Jams (Atascos): //faltacambiarDiegoDeMierdaFlojito
 ```bash
-docker exec -it distribuidos_namenode bash -c "\
-  hdfs dfs -mkdir -p /datos && \
-  hdfs dfs -put /datos/alertas.csv /datos/alertas.csv \
-"
+docker exec -it distribuidos_db mongoexport \
+  --host localhost \
+  --db SD_db \
+  --collection Jams \
+  --type=csv \
+  --fields uuid,severity,country,length,endnode,speed,city,street,type,line.0.x,line.0.y,pubMillis,fecha_actual \
+  --out /datos/jams.csv
+```
+
+Después de ejecutar lo anterior, tendrémos dos csv en nuestra carpeta local, los cuales se deben mover al contenedor de hadoop para hacer el filtrado con pig.
+
+1. Primero se copian a la carpeta del contenedor de hadoop:
+```bash
+docker cp ./data_host/alertas.csv distribuidos_hadoop:/alertas.csv
+docker cp ./data_host/jams.csv distribuidos_hadoop:/jams.csv
+```
+3. Con los pasos anteriores tedrémos los datos en la carpeta del contenedor, sin embarno no dentro de este mismo, para ello primero entramos en el entorno de hadoop:
+```bash
+docker exec -it distribuidos_hadoop bash
+```
+4. Para luego mover los datos dentro de la carpeta deseada:
+```bash
+hdfs dfs -mkdir -p /datos
+hdfs dfs -copyFromLocal -f /alertas.csv /datos/alertas.csv
+hdfs dfs -copyFromLocal -f /jams.csv /datos/jams.csv
 ```
 
 ## Processing
