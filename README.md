@@ -103,14 +103,14 @@ docker exec -it distribuidos_db mongoexport \
   --fields uuid,country,city,street,type,subtype,location.x,location.y,pubMillis,fecha_subida \
   --out /datos/alertas.csv
 ```
-2. Obtención de Jams (Atascos): //faltacambiarDiegoDeMierdaFlojito
+2. Obtención de Jams (Atascos):
 ```bash
 docker exec -it distribuidos_db mongoexport \
   --host localhost \
   --db SD_db \
   --collection Jams \
   --type=csv \
-  --fields uuid,severity,country,length,endnode,speed,city,street,type,line.0.x,line.0.y,pubMillis,fecha_actual \
+  --fields uuid,severity,country,length,speed,city,street,type,line.0.x,line.0.y,pubMillis,fecha_subida \
   --out /datos/jams.csv
 ```
 
@@ -130,6 +130,48 @@ docker exec -it distribuidos_hadoop bash
 hdfs dfs -mkdir -p /datos
 hdfs dfs -copyFromLocal -f /alertas.csv /datos/alertas.csv
 hdfs dfs -copyFromLocal -f /jams.csv /datos/jams.csv
+exit
+```
+
+Una vez se ejecutó lo anterior, está listo el entorno en hadoop para poder ejecutar el script de pig desde su propio contenedor y que este se conecte correctamente a hadoop para realizar el filtrado a través de :
+
+1. Conectarse a contenedor con pig:
+```bash
+docker exec -it distribuidos_pig bash
+```
+2. Ejecutar eliminado y filtrado de datos:
+```bash
+pig Eliminacion_duplicados_y_filtrado.pig
+```
+Ten en cuenta que si ya has ejecutado el scipt antes, deberás eliminar las carpetas con los resultados antes, ya que pig no sobreescribe:
+```bash
+hdfs dfs -rm -r /datos/alertas_output
+hdfs dfs -rm -r /datos/jams_output
+```
+
+Finalizando esto, ya puedes salir del contenedor:
+```bash
+exit
+```
+
+En caso de querer obtener los resultados obtenidos por este script, deberás obtenerlos a través de:
+
+1. Entrar a contenedor de hadoop:
+```bash
+docker exec -it distribuidos_hadoop bash
+```
+
+2. Extraer los archivos:
+```bash
+hdfs dfs -get /datos/alertas_output/part-r-00000 /alertas_resultado.csv
+hdfs dfs -get /datos/jams_output/part-r-00000 /jams_resultado.csv
+exit
+```
+
+3. Moverlos a la carpeta local para una visualización más cómoda en tu máquina.
+```bash
+docker cp distribuidos_hadoop:/alertas_resultado.csv ./data_host/alertas_resultado.csv
+docker cp distribuidos_hadoop:/jams_resultado.csv ./data_host/jams_resultado.csv
 ```
 
 ## Processing

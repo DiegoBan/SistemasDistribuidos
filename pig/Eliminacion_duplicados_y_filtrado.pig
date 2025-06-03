@@ -81,7 +81,6 @@ eventos_crudos_atascos = LOAD 'hdfs://hadoop:9000/datos/jams.csv'
         severity:int,
         country:chararray,
         length:int,
-        endnode:chararray,
         speed:double,
         city:chararray,
         street:chararray,
@@ -97,7 +96,6 @@ eventos_validos_atascos = FILTER eventos_crudos_atascos BY
     severity IS NOT NULL AND severity != 0 AND
     country IS NOT NULL AND country != '' AND
     length IS NOT NULL AND length != 0 AND
-    endnode IS NOT NULL AND endnode != '' AND
     speed IS NOT NULL AND speed > 0 AND
     city IS NOT NULL AND city != '' AND
     street IS NOT NULL AND street != '' AND
@@ -134,7 +132,6 @@ eventos_normalizados_atascos = FOREACH eventos_con_rejilla_atascos GENERATE
     severity,
     LOWER(country) AS country,
     length,
-    LOWER(endnode) AS endnode,
     speed,
     LOWER(city) AS city,
     LOWER(street) AS street,
@@ -150,7 +147,7 @@ eventos_normalizados_atascos = FOREACH eventos_con_rejilla_atascos GENERATE
     lat_grid,
     lon_grid;
 
-agrupados_por_tipo_coord_bloque_atascos = GROUP eventos_normalizados_atascos BY (type, lat_grid, lon_grid, bloque_horario);
+agrupados_por_tipo_coord_bloque_atascos = GROUP eventos_normalizados_atascos BY (type, street, lat_grid, lon_grid, bloque_horario);
 
 eventos_homogeneizados_atascos = FOREACH agrupados_por_tipo_coord_bloque_atascos {
     eventos = eventos_normalizados_atascos;
