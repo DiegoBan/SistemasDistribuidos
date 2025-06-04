@@ -145,8 +145,7 @@ pig Eliminacion_duplicados_y_filtrado.pig
 ```
 Ten en cuenta que si ya has ejecutado el scipt antes, deberás eliminar las carpetas con los resultados antes, ya que pig no sobreescribe:
 ```bash
-hdfs dfs -rm -r /datos/alertas_output
-hdfs dfs -rm -r /datos/jams_output
+hdfs dfs -rm -r /datos/*_output
 ```
 
 Finalizando esto, ya puedes salir del contenedor:
@@ -175,3 +174,44 @@ docker cp distribuidos_hadoop:/jams_resultado.csv ./data_host/jams_resultado.csv
 ```
 
 ## Processing
+
+Una vez ejecutamos el eliminado de duplicados, filtrado y homogenización (Independiente de si se extrajo la información a local o no), se puede realizar un análisis de esta información obtenida, esto a través de un script de pig, para ejecutarlo debemos entrar al contenedor de pig y ejecutar el código.
+
+1. Conectarse a contenedor de pig:
+```bash
+docker exec -it distribuidos_pig bash
+```
+
+2. Ejecutar procesamiento:
+```bash
+pig Procesado_datos.pig
+```
+
+Debes tener en cuenta que si ya ejecutaste este script anteriormente, debes eliminar los archivos creados, ya que pig no sobreescribire y obtendrás un error:
+
+```bash
+hdfs dfs -rm -r /datos/processing/
+```
+
+Para salirse del contenedor:
+```bash
+exit
+```
+
+Si quieres obtener los resultados para poder analizarlos, estos se deben mover a tu máquina y así poder hacer uso de ellos fuera de los contenedores:
+
+1. Entrar a contenedor de hadoop:
+```bash
+docker exec -it distribuidos_hadoop bash
+```
+
+2. Extraer la carpeta con los resultados de processing:
+```bash
+hdfs dfs -get /datos/processing/ /resultados
+exit
+```
+
+3. Mover la carpeta a tu máquina local para poder visualizarlos y trabajar con ellos:
+```bash
+docker cp distribuidos_hadoop:/resultados ./data_host/resultados
+```
