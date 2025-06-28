@@ -31,9 +31,9 @@ docker container prune
 
 Asegurate de tener instalado Docker y Docker Compose antes de iniciar el proyecto.
 
-### Entrega 1
+## Entrega 1
 
-##  Scrapper
+###  Scrapper
 
 El scrapper obtiene información desde la página de [Waze](https://www.waze.com/es-419/live-map/), obteniendo desde cada comuna de la región metropolitana sus alertas y tráfico del momento, para posteriormente guardarlo en el Almacenamiento.
 Al inicializar el entorno de docker-compose, automaticamente se realiza una ejecuión del Scrapper, añadiendo más datos a la base de datos, sin embargo, si el entorno ya está levantado y se desea realizar otra ejecución, se debe entrar a la consola del contenedor a través de:
@@ -48,7 +48,7 @@ Y ejecutar:
 python Web_Scrapper.py
 ```
 
-##  Almacenamiento
+###  Almacenamiento
 
 Para el almacenamiento se utilizó la base de datos noSQL mongoDB, a través de su imagen oficial de Docker, abriendola en el puerto "27017" y creando un volumen (para el guardado de datos local) en la carpeta "./Almacenamiento:/data/db".
 Para conectarse con la consola de mongodb se puede utilizar el comando:
@@ -63,7 +63,7 @@ Para contar cuantos datos hay en una colección, se puede utilizar lo siguiente 
 db.collection.countDocuments({})
 ```
 
-##  Generador de Tráfico
+###  Generador de Tráfico
 
 El trafico se genera a través de un script de python, el cual utilizando una distribución (Normal o Poisson) genera una cantidad de tráfico cada x tiempo determinado antes de iniciar, envía el tráfico y recibe una resuesta en forma de True o False que significa si estába en caché o no.
 Estos scripts se ejecutan entrando al contendor que tiene estos scripts:
@@ -81,15 +81,15 @@ python Test_Trafico_Normal.py
 python Test_Trafico_Poisson.py
 ```
 
-##  Sistema de Cache
+###  Sistema de Cache
 
 Utilizando Redis, se crea una memoria cache (en memoria principal), el cual puede tener distintos tamaños o política de remoción.
 El tamaño de este se puede intercambiar a través de http://0.0.0.0:8000/changesize/{size} (o desde contenedores: http://cache:8000/changesize/{size}), en el cual size es un número que representa el tamaño de la memoria para cache en MB.
 Por otro lado tenemos la política de remoción, las cuales son LRU (Last Recently Use) o LFU (Least Frecuently Use), estas se intercambian entre sí tan solo llamando a http://0.0.0.0:8000/changepolicy (o desde contenedores: http://cache:8000/changepolicy).
 
-### Entrega 2
+## Entrega 2
 
-## Filtering y Homogeneización
+### Filtering y Homogeneización
 
 Se utiliza un script de pig para realizar la eliminación de duplicados, filtrado y homogenización de los datos obtenidos a través del scrapping, para realizar este proceso, primero se deben obtener los datos desde la base de datos mongoDB en un csv que utilizará posteriormente pig, para ello se deben insertar los siguientes comandos:
 
@@ -173,7 +173,7 @@ docker cp distribuidos_hadoop:/alertas_resultado.csv ./data_host/alertas_resulta
 docker cp distribuidos_hadoop:/jams_resultado.csv ./data_host/jams_resultado.csv
 ```
 
-## Processing
+### Processing
 
 Una vez ejecutamos el eliminado de duplicados, filtrado y homogenización (Independiente de si se extrajo la información a local o no), se puede realizar un análisis de esta información obtenida, esto a través de un script de pig, para ejecutarlo debemos entrar al contenedor de pig y ejecutar el código.
 
@@ -215,3 +215,5 @@ exit
 ```bash
 docker cp distribuidos_hadoop:/resultados ./data_host/resultados
 ```
+
+## Entrega 3
