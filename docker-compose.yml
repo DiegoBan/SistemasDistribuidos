@@ -101,6 +101,7 @@ services:
     environment:
       HADOOP_CONF_DIR: /etc/hadoop/conf
     command: ["bash"]
+  
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.7.0
     container_name: distribuidos_elasticsearch
@@ -115,7 +116,7 @@ services:
       - default
   kibana:
     image: docker.elastic.co/kibana/kibana:8.7.0
-    container_name: distribuiods_kibana
+    container_name: distribuidos_kibana
     depends_on:
       - elasticsearch
     environment:

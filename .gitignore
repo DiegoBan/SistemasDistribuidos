@@ -1,3 +1,5 @@
 .DS_Store
 /Almacenamiento/
 /data_host/
+Scrapper/Funciones_Scrapper/__pycache__/
+*.jar

@@ -14,13 +14,13 @@ Se utiliza docker, a través de dockerfiles y docker-compose para separar los di
 Para inicializar los distintos contenedores y levantar el entorno, se utiliza lo siguiente en la carpeta raíz del proyecto:
 
 ```bash
-docker-compose up --build -d
+docker compose up --build -d
 ```
 
 Para terminar la ejecución del entorno se utiliza:
 
 ```bash
-docker-compose down
+docker compose down
 ```
 
 En caso de querer eliminar todos los contenedores detenidos se puede utilizar:
