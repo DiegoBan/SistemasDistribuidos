@@ -71,6 +71,7 @@ docker exec distribuidos_db mongoexport \
     --collection Alertas \
     --type=csv \
     --fields uuid,country,city,street,type,subtype,location.x,location.y,pubMillis,fecha_subida \
+    --limit=5000 \
     --out /datos/alertas.csv > /dev/null
 
 docker exec distribuidos_db mongoexport \
@@ -79,6 +80,7 @@ docker exec distribuidos_db mongoexport \
     --collection Jams \
     --type=csv \
     --fields uuid,severity,country,length,speed,city,street,type,line.0.x,line.0.y,pubMillis,fecha_subida \
+    --limit=5000 \
     --out /datos/jams.csv > /dev/null
 
 wait_for_file "distribuidos_db" "/datos/alertas.csv"
@@ -108,7 +110,7 @@ docker exec distribuidos_hadoop hdfs dfs -rm -r /datos/processing/ 2>/dev/null |
 
 # 7. Filtrado y eliminación de duplicados
 echo "7. Ejecutando filtrado..."
-docker exec -it distribuidos_pig pig Eliminacion_duplicados_y_filtrado.pig
+docker exec -it distribuidos_pig pig -x local Eliminacion_duplicados_y_filtrado.pig
 echo "Verificar que hdfs files se crearan"
 wait_for_hdfs_file "distribuidos_hadoop" "/datos/alertas_output/part-r-00000"
 wait_for_hdfs_file "distribuidos_hadoop" "/datos/jams_output/part-r-00000"
@@ -123,10 +125,19 @@ docker cp distribuidos_hadoop:/jams_resultado.csv ./data_host/jams_resultado.csv
 
 # 9. Procesamiento de datos
 echo "9. Ejecutando procesamiento..."
-docker exec distribuidos_pig pig Procesado_datos.pig
-
-# También cambiar aquí si es necesario
-wait_for_hdfs_file "distribuidos_hadoop" "/datos/processing/_SUCCESS"
+docker exec distribuidos_pig pig -x local Procesado_datos.pig
+echo "verificando creacion frecuencia_comuna_tipo"
+wait_for_hdfs_file "distribuidos_hadoop" "/datos/processing/frecuencia_comuna_tipo/part-r-00000"
+echo "verificando creacion frecuencia_bloque_horario"
+wait_for_hdfs_file "distribuidos_hadoop" "/datos/processing/frecuencia_bloque_horario/part-r-00000"
+echo "verificando creacion eventos_por_comuna"
+wait_for_hdfs_file "distribuidos_hadoop" "/datos/processing/eventos_por_comuna/part-r-00000"
+echo "verificando creacion accidentes_por_comuna"
+wait_for_hdfs_file "distribuidos_hadoop" "/datos/processing/accidentes_por_comuna/part-r-00000"
+echo "verificando creacion eventos_por_calle"
+wait_for_hdfs_file "distribuidos_hadoop" "/datos/processing/eventos_por_calle/part-r-00000"
+echo "verificando creacion atascos_por_ciudad"
+wait_for_hdfs_file "distribuidos_hadoop" "/datos/processing/atascos_por_ciudad/part-r-00000"
 
 # 10. Extraer resultados finales
 echo "10. Extrayendo resultados finales..."

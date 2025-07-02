@@ -1,0 +1,317 @@
+2025-07-02 03:24:24,154 - INFO - INICIANDO INSERCIÓN AUTOMÁTICA DE DATOS
+2025-07-02 03:24:24,154 - INFO - ================================================================================
+2025-07-02 03:24:24,154 - INFO - Conectando a Elasticsearch (intento 1/5)
+2025-07-02 03:24:24,201 - INFO - HEAD http://elasticsearch:9200/ [status:200 duration:0.045s]
+2025-07-02 03:24:24,201 - INFO - Conectado exitosamente a Elasticsearch
+2025-07-02 03:24:24,201 - INFO - Verificando archivos disponibles...
+2025-07-02 03:24:24,202 - INFO - ✓ alertas.csv - 0.75 MB
+2025-07-02 03:24:24,203 - INFO - ✓ alertas_resultado.csv - 0.09 MB
+2025-07-02 03:24:24,203 - INFO - ✓ jams.csv - 0.58 MB
+2025-07-02 03:24:24,204 - INFO - ✓ jams_resultado.csv - 0.14 MB
+2025-07-02 03:24:24,205 - INFO - ✓ resultados/accidentes_por_comuna/part-r-00000 - 0.00 MB
+2025-07-02 03:24:24,206 - INFO - ✓ resultados/atascos_por_ciudad/part-r-00000 - 0.00 MB
+2025-07-02 03:24:24,207 - INFO - ✓ resultados/eventos_por_calle/part-r-00000 - 0.00 MB
+2025-07-02 03:24:24,208 - INFO - ✓ resultados/eventos_por_comuna/part-r-00000 - 0.00 MB
+2025-07-02 03:24:24,208 - INFO - ✓ resultados/frecuencia_bloque_horario/part-r-00000 - 0.00 MB
+2025-07-02 03:24:24,209 - INFO - ✓ resultados/frecuencia_comuna_tipo/part-r-00000 - 0.00 MB
+2025-07-02 03:24:24,209 - INFO - Se procesarán 10 archivos
+2025-07-02 03:24:24,210 - INFO - 
+🔄 Procesando archivos de tipo: RAW DATA
+2025-07-02 03:24:24,210 - INFO - ------------------------------------------------------------
+2025-07-02 03:24:24,211 - INFO - 
+============================================================
+2025-07-02 03:24:24,211 - INFO - PROCESANDO ARCHIVO: alertas.csv
+2025-07-02 03:24:24,211 - INFO - TIPO DE DATOS: raw_data
+2025-07-02 03:24:24,211 - INFO - ============================================================
+2025-07-02 03:24:24,233 - INFO - Archivo cargado: 5,000 filas, 10 columnas
+2025-07-02 03:24:24,233 - INFO - Columnas encontradas: ['uuid', 'country', 'city', 'street', 'type', 'subtype', 'location.x', 'location.y', 'pubMillis', 'fecha_subida']
+2025-07-02 03:24:24,237 - INFO - Registros únicos por uuid: 933/5,000
+2025-07-02 03:24:24,237 - WARNING - Se encontraron 4067 registros duplicados en el CSV
+2025-07-02 03:24:24,239 - INFO - Después de eliminar duplicados: 933 registros
+2025-07-02 03:24:24,260 - INFO - HEAD http://elasticsearch:9200/alertas_scrapper [status:404 duration:0.021s]
+2025-07-02 03:24:24,559 - INFO - PUT http://elasticsearch:9200/alertas_scrapper [status:200 duration:0.237s]
+2025-07-02 03:24:24,559 - INFO - Índice alertas_scrapper creado
+2025-07-02 03:24:24,562 - INFO - HEAD http://elasticsearch:9200/alertas_scrapper [status:200 duration:0.002s]
+2025-07-02 03:24:24,562 - INFO - Obteniendo claves existentes de alertas_scrapper...
+2025-07-02 03:24:24,578 - INFO - POST http://elasticsearch:9200/alertas_scrapper/_search?scroll=2m [status:200 duration:0.015s]
+2025-07-02 03:24:24,590 - INFO - DELETE http://elasticsearch:9200/_search/scroll [status:200 duration:0.011s]
+2025-07-02 03:24:24,590 - INFO - Encontrados 0 registros existentes en alertas_scrapper
+2025-07-02 03:24:24,590 - INFO - No hay registros existentes, insertando todos
+2025-07-02 03:24:24,882 - INFO - PUT http://elasticsearch:9200/_bulk [status:200 duration:0.214s]
+2025-07-02 03:24:24,888 - ERROR - Error insertando en Elasticsearch (alertas_scrapper): 933 document(s) failed to index.
+2025-07-02 03:24:24,889 - ERROR - ✗ alertas.csv falló durante el procesamiento
+2025-07-02 03:24:24,890 - INFO - 
+============================================================
+2025-07-02 03:24:24,890 - INFO - PROCESANDO ARCHIVO: jams.csv
+2025-07-02 03:24:24,890 - INFO - TIPO DE DATOS: raw_data
+2025-07-02 03:24:24,890 - INFO - ============================================================
+2025-07-02 03:24:24,903 - INFO - Archivo cargado: 5,000 filas, 12 columnas
+2025-07-02 03:24:24,903 - INFO - Columnas encontradas: ['uuid', 'severity', 'country', 'length', 'speed', 'city', 'street', 'type', 'line.0.x', 'line.0.y', 'pubMillis', 'fecha_subida']
+2025-07-02 03:24:24,905 - INFO - Registros únicos por uuid: 944/5,000
+2025-07-02 03:24:24,905 - WARNING - Se encontraron 4056 registros duplicados en el CSV
+2025-07-02 03:24:24,906 - INFO - Después de eliminar duplicados: 944 registros
+2025-07-02 03:24:24,909 - INFO - HEAD http://elasticsearch:9200/jams_scrapper [status:404 duration:0.002s]
+2025-07-02 03:24:25,028 - INFO - PUT http://elasticsearch:9200/jams_scrapper [status:200 duration:0.118s]
+2025-07-02 03:24:25,029 - INFO - Índice jams_scrapper creado
+2025-07-02 03:24:25,036 - INFO - HEAD http://elasticsearch:9200/jams_scrapper [status:200 duration:0.006s]
+2025-07-02 03:24:25,036 - INFO - Obteniendo claves existentes de jams_scrapper...
+2025-07-02 03:24:25,043 - INFO - POST http://elasticsearch:9200/jams_scrapper/_search?scroll=2m [status:200 duration:0.006s]
+2025-07-02 03:24:25,046 - INFO - DELETE http://elasticsearch:9200/_search/scroll [status:200 duration:0.002s]
+2025-07-02 03:24:25,046 - INFO - Encontrados 0 registros existentes en jams_scrapper
+2025-07-02 03:24:25,046 - INFO - No hay registros existentes, insertando todos
+2025-07-02 03:24:25,892 - INFO - PUT http://elasticsearch:9200/_bulk [status:200 duration:0.791s]
+2025-07-02 03:24:25,909 - ERROR - Error insertando en Elasticsearch (jams_scrapper): cannot unpack non-iterable int object
+2025-07-02 03:24:25,911 - ERROR - ✗ jams.csv falló durante el procesamiento
+2025-07-02 03:24:25,912 - INFO - 
+🔄 Procesando archivos de tipo: PROCESSED DATA
+2025-07-02 03:24:25,913 - INFO - ------------------------------------------------------------
+2025-07-02 03:24:25,914 - INFO - 
+============================================================
+2025-07-02 03:24:25,914 - INFO - PROCESANDO ARCHIVO: alertas_resultado.csv
+2025-07-02 03:24:25,914 - INFO - TIPO DE DATOS: processed_data
+2025-07-02 03:24:25,914 - INFO - ============================================================
+2025-07-02 03:24:25,942 - INFO - Archivo cargado: 362 filas, 16 columnas
+2025-07-02 03:24:25,942 - INFO - Columnas encontradas: ['3d3999e9-3fb9-4b5a-be85-1b792ffd1c64', 'ci', 'la cisterna', 'las gaviotas', 'accident', 'accident_major', '-70.669085', '-33.536796', '0.31368446666666666', '0.3036969861111111', '1745133786000', '2025-04-20T07:31:44.267582', '2025-04-20T07:31:44.267-04:00', '2', '-33536', '-70669']
+2025-07-02 03:24:25,944 - WARNING - Estructura de columnas difiere de la esperada
+2025-07-02 03:24:25,946 - WARNING - Esperadas: ['uuid', 'country', 'city', 'street', 'type', 'subtype', 'longitude', 'latitude', 'lat_norm', 'lon_norm', 'pubMillis', 'fecha_actual', 'fecha_dt', 'bloque_horario', 'lat_grid', 'lon_grid']
+2025-07-02 03:24:25,946 - WARNING - Encontradas: ['3d3999e9-3fb9-4b5a-be85-1b792ffd1c64', 'ci', 'la cisterna', 'las gaviotas', 'accident', 'accident_major', '-70.669085', '-33.536796', '0.31368446666666666', '0.3036969861111111', '1745133786000', '2025-04-20T07:31:44.267582', '2025-04-20T07:31:44.267-04:00', '2', '-33536', '-70669']
+2025-07-02 03:24:25,959 - INFO - HEAD http://elasticsearch:9200/alertas_filtrado [status:404 duration:0.011s]
+2025-07-02 03:24:26,242 - INFO - PUT http://elasticsearch:9200/alertas_filtrado [status:200 duration:0.278s]
+2025-07-02 03:24:26,243 - INFO - Índice alertas_filtrado creado
+2025-07-02 03:24:26,250 - INFO - HEAD http://elasticsearch:9200/alertas_filtrado [status:200 duration:0.006s]
+2025-07-02 03:24:26,251 - INFO - Obteniendo claves existentes de alertas_filtrado...
+2025-07-02 03:24:26,260 - INFO - POST http://elasticsearch:9200/alertas_filtrado/_search?scroll=2m [status:200 duration:0.008s]
+2025-07-02 03:24:26,270 - INFO - DELETE http://elasticsearch:9200/_search/scroll [status:200 duration:0.009s]
+2025-07-02 03:24:26,270 - INFO - Encontrados 0 registros existentes en alertas_filtrado
+2025-07-02 03:24:26,272 - INFO - No hay registros existentes, insertando todos
+2025-07-02 03:24:26,607 - INFO - PUT http://elasticsearch:9200/_bulk [status:200 duration:0.277s]
+2025-07-02 03:24:26,610 - ERROR - Error insertando en Elasticsearch (alertas_filtrado): cannot unpack non-iterable int object
+2025-07-02 03:24:26,610 - ERROR - ✗ alertas_resultado.csv falló durante el procesamiento
+2025-07-02 03:24:26,611 - INFO - 
+============================================================
+2025-07-02 03:24:26,611 - INFO - PROCESANDO ARCHIVO: jams_resultado.csv
+2025-07-02 03:24:26,611 - INFO - TIPO DE DATOS: processed_data
+2025-07-02 03:24:26,611 - INFO - ============================================================
+2025-07-02 03:24:26,618 - INFO - Archivo cargado: 669 filas, 18 columnas
+2025-07-02 03:24:26,619 - INFO - Columnas encontradas: ['1199116774', '5', 'ci', '7786', '7.7444444444444445', 'pudahuel', 'ruta 68', 'large', '-70.895333', '-33.455734', '0.31413481111111113', '0.30306851944444446', '1745164806944', '2025-04-20T17:51:59.458118', '2025-04-20T17:51:59.458-04:00', '2', '-3345', '-7089']
+2025-07-02 03:24:26,619 - WARNING - Estructura de columnas difiere de la esperada
+2025-07-02 03:24:26,619 - WARNING - Esperadas: ['uuid', 'severity', 'country', 'length', 'speed', 'city', 'street', 'type', 'longitude', 'latitude', 'lat_norm', 'lon_norm', 'pubMillis', 'fecha_actual', 'fecha_dt', 'bloque_horario', 'lat_grid', 'lon_grid']
+2025-07-02 03:24:26,619 - WARNING - Encontradas: ['1199116774', '5', 'ci', '7786', '7.7444444444444445', 'pudahuel', 'ruta 68', 'large', '-70.895333', '-33.455734', '0.31413481111111113', '0.30306851944444446', '1745164806944', '2025-04-20T17:51:59.458118', '2025-04-20T17:51:59.458-04:00', '2', '-3345', '-7089']
+2025-07-02 03:24:26,624 - INFO - HEAD http://elasticsearch:9200/jams_filtrado [status:404 duration:0.004s]
+2025-07-02 03:24:26,761 - INFO - PUT http://elasticsearch:9200/jams_filtrado [status:200 duration:0.136s]
+2025-07-02 03:24:26,761 - INFO - Índice jams_filtrado creado
+2025-07-02 03:24:26,764 - INFO - HEAD http://elasticsearch:9200/jams_filtrado [status:200 duration:0.002s]
+2025-07-02 03:24:26,764 - INFO - Obteniendo claves existentes de jams_filtrado...
+2025-07-02 03:24:26,770 - INFO - POST http://elasticsearch:9200/jams_filtrado/_search?scroll=2m [status:200 duration:0.005s]
+2025-07-02 03:24:26,772 - INFO - DELETE http://elasticsearch:9200/_search/scroll [status:200 duration:0.002s]
+2025-07-02 03:24:26,775 - INFO - Encontrados 0 registros existentes en jams_filtrado
+2025-07-02 03:24:26,775 - INFO - No hay registros existentes, insertando todos
+2025-07-02 03:24:26,930 - INFO - PUT http://elasticsearch:9200/_bulk [status:200 duration:0.113s]
+2025-07-02 03:24:26,932 - ERROR - Error insertando en Elasticsearch (jams_filtrado): cannot unpack non-iterable int object
+2025-07-02 03:24:26,932 - ERROR - ✗ jams_resultado.csv falló durante el procesamiento
+2025-07-02 03:24:26,933 - INFO - 
+🔄 Procesando archivos de tipo: AGGREGATED RESULTS
+2025-07-02 03:24:26,933 - INFO - ------------------------------------------------------------
+2025-07-02 03:24:26,933 - INFO - 
+============================================================
+2025-07-02 03:24:26,933 - INFO - PROCESANDO ARCHIVO: resultados/accidentes_por_comuna/part-r-00000
+2025-07-02 03:24:26,933 - INFO - TIPO DE DATOS: aggregated_results
+2025-07-02 03:24:26,934 - INFO - ============================================================
+2025-07-02 03:24:26,937 - INFO - Archivo cargado: 1 filas, 2 columnas
+2025-07-02 03:24:26,937 - INFO - Columnas encontradas: ['quinta normal', '1']
+2025-07-02 03:24:26,937 - WARNING - Estructura de columnas difiere de la esperada
+2025-07-02 03:24:26,937 - WARNING - Esperadas: ['comuna', 'accidentes_comuna']
+2025-07-02 03:24:26,937 - WARNING - Encontradas: ['quinta normal', '1']
+2025-07-02 03:24:26,940 - INFO - HEAD http://elasticsearch:9200/accidentes_por_comuna [status:404 duration:0.002s]
+2025-07-02 03:24:27,024 - INFO - PUT http://elasticsearch:9200/accidentes_por_comuna [status:200 duration:0.084s]
+2025-07-02 03:24:27,025 - INFO - Índice accidentes_por_comuna creado
+2025-07-02 03:24:27,027 - INFO - HEAD http://elasticsearch:9200/accidentes_por_comuna [status:200 duration:0.002s]
+2025-07-02 03:24:27,029 - INFO - Obteniendo claves existentes de accidentes_por_comuna...
+2025-07-02 03:24:27,036 - INFO - POST http://elasticsearch:9200/accidentes_por_comuna/_search?scroll=2m [status:200 duration:0.006s]
+2025-07-02 03:24:27,038 - INFO - DELETE http://elasticsearch:9200/_search/scroll [status:200 duration:0.002s]
+2025-07-02 03:24:27,039 - INFO - Encontrados 0 registros existentes en accidentes_por_comuna
+2025-07-02 03:24:27,039 - INFO - No hay registros existentes, insertando todos
+2025-07-02 03:24:27,077 - INFO - PUT http://elasticsearch:9200/_bulk [status:200 duration:0.037s]
+2025-07-02 03:24:27,078 - ERROR - Error insertando en Elasticsearch (accidentes_por_comuna): cannot unpack non-iterable int object
+2025-07-02 03:24:27,078 - ERROR - ✗ resultados/accidentes_por_comuna/part-r-00000 falló durante el procesamiento
+2025-07-02 03:24:27,078 - INFO - 
+============================================================
+2025-07-02 03:24:27,078 - INFO - PROCESANDO ARCHIVO: resultados/atascos_por_ciudad/part-r-00000
+2025-07-02 03:24:27,078 - INFO - TIPO DE DATOS: aggregated_results
+2025-07-02 03:24:27,079 - INFO - ============================================================
+2025-07-02 03:24:27,080 - INFO - Archivo cargado: 70 filas, 3 columnas
+2025-07-02 03:24:27,081 - INFO - Columnas encontradas: ['santiago', '40386', '78']
+2025-07-02 03:24:27,081 - WARNING - Estructura de columnas difiere de la esperada
+2025-07-02 03:24:27,081 - WARNING - Esperadas: ['ciudad', 'largo_total', 'num_atascos']
+2025-07-02 03:24:27,081 - WARNING - Encontradas: ['santiago', '40386', '78']
+2025-07-02 03:24:27,083 - INFO - HEAD http://elasticsearch:9200/atascos_por_ciudad [status:404 duration:0.002s]
+2025-07-02 03:24:27,147 - INFO - PUT http://elasticsearch:9200/atascos_por_ciudad [status:200 duration:0.063s]
+2025-07-02 03:24:27,147 - INFO - Índice atascos_por_ciudad creado
+2025-07-02 03:24:27,149 - INFO - HEAD http://elasticsearch:9200/atascos_por_ciudad [status:200 duration:0.002s]
+2025-07-02 03:24:27,149 - INFO - Obteniendo claves existentes de atascos_por_ciudad...
+2025-07-02 03:24:27,156 - INFO - POST http://elasticsearch:9200/atascos_por_ciudad/_search?scroll=2m [status:200 duration:0.006s]
+2025-07-02 03:24:27,158 - INFO - DELETE http://elasticsearch:9200/_search/scroll [status:200 duration:0.002s]
+2025-07-02 03:24:27,158 - INFO - Encontrados 0 registros existentes en atascos_por_ciudad
+2025-07-02 03:24:27,159 - INFO - No hay registros existentes, insertando todos
+2025-07-02 03:24:27,187 - INFO - PUT http://elasticsearch:9200/_bulk [status:200 duration:0.025s]
+2025-07-02 03:24:27,188 - ERROR - Error insertando en Elasticsearch (atascos_por_ciudad): cannot unpack non-iterable int object
+2025-07-02 03:24:27,188 - ERROR - ✗ resultados/atascos_por_ciudad/part-r-00000 falló durante el procesamiento
+2025-07-02 03:24:27,188 - INFO - 
+============================================================
+2025-07-02 03:24:27,189 - INFO - PROCESANDO ARCHIVO: resultados/eventos_por_calle/part-r-00000
+2025-07-02 03:24:27,189 - INFO - TIPO DE DATOS: aggregated_results
+2025-07-02 03:24:27,189 - INFO - ============================================================
+2025-07-02 03:24:27,190 - INFO - Archivo cargado: 184 filas, 2 columnas
+2025-07-02 03:24:27,191 - INFO - Columnas encontradas: ["av. libertador bernardo o'higgins", '24']
+2025-07-02 03:24:27,191 - WARNING - Estructura de columnas difiere de la esperada
+2025-07-02 03:24:27,191 - WARNING - Esperadas: ['calle', 'cantidad_eventos']
+2025-07-02 03:24:27,191 - WARNING - Encontradas: ["av. libertador bernardo o'higgins", '24']
+2025-07-02 03:24:27,193 - INFO - HEAD http://elasticsearch:9200/eventos_por_calle [status:404 duration:0.002s]
+2025-07-02 03:24:27,244 - INFO - PUT http://elasticsearch:9200/eventos_por_calle [status:200 duration:0.050s]
+2025-07-02 03:24:27,244 - INFO - Índice eventos_por_calle creado
+2025-07-02 03:24:27,246 - INFO - HEAD http://elasticsearch:9200/eventos_por_calle [status:200 duration:0.002s]
+2025-07-02 03:24:27,247 - INFO - Obteniendo claves existentes de eventos_por_calle...
+2025-07-02 03:24:27,250 - INFO - POST http://elasticsearch:9200/eventos_por_calle/_search?scroll=2m [status:200 duration:0.003s]
+2025-07-02 03:24:27,251 - INFO - DELETE http://elasticsearch:9200/_search/scroll [status:200 duration:0.001s]
+2025-07-02 03:24:27,252 - INFO - Encontrados 0 registros existentes en eventos_por_calle
+2025-07-02 03:24:27,252 - INFO - No hay registros existentes, insertando todos
+2025-07-02 03:24:27,302 - INFO - PUT http://elasticsearch:9200/_bulk [status:200 duration:0.043s]
+2025-07-02 03:24:27,303 - ERROR - Error insertando en Elasticsearch (eventos_por_calle): cannot unpack non-iterable int object
+2025-07-02 03:24:27,303 - ERROR - ✗ resultados/eventos_por_calle/part-r-00000 falló durante el procesamiento
+2025-07-02 03:24:27,303 - INFO - 
+============================================================
+2025-07-02 03:24:27,304 - INFO - PROCESANDO ARCHIVO: resultados/eventos_por_comuna/part-r-00000
+2025-07-02 03:24:27,304 - INFO - TIPO DE DATOS: aggregated_results
+2025-07-02 03:24:27,305 - INFO - ============================================================
+2025-07-02 03:24:27,306 - INFO - Archivo cargado: 46 filas, 2 columnas
+2025-07-02 03:24:27,306 - INFO - Columnas encontradas: ['santiago', '45']
+2025-07-02 03:24:27,307 - WARNING - Estructura de columnas difiere de la esperada
+2025-07-02 03:24:27,307 - WARNING - Esperadas: ['comuna', 'cantidad_eventos']
+2025-07-02 03:24:27,307 - WARNING - Encontradas: ['santiago', '45']
+2025-07-02 03:24:27,309 - INFO - HEAD http://elasticsearch:9200/eventos_por_comuna [status:404 duration:0.002s]
+2025-07-02 03:24:27,406 - INFO - PUT http://elasticsearch:9200/eventos_por_comuna [status:200 duration:0.096s]
+2025-07-02 03:24:27,406 - INFO - Índice eventos_por_comuna creado
+2025-07-02 03:24:27,409 - INFO - HEAD http://elasticsearch:9200/eventos_por_comuna [status:200 duration:0.002s]
+2025-07-02 03:24:27,409 - INFO - Obteniendo claves existentes de eventos_por_comuna...
+2025-07-02 03:24:27,414 - INFO - POST http://elasticsearch:9200/eventos_por_comuna/_search?scroll=2m [status:200 duration:0.004s]
+2025-07-02 03:24:27,416 - INFO - DELETE http://elasticsearch:9200/_search/scroll [status:200 duration:0.002s]
+2025-07-02 03:24:27,417 - INFO - Encontrados 0 registros existentes en eventos_por_comuna
+2025-07-02 03:24:27,417 - INFO - No hay registros existentes, insertando todos
+2025-07-02 03:24:27,444 - INFO - PUT http://elasticsearch:9200/_bulk [status:200 duration:0.023s]
+2025-07-02 03:24:27,444 - ERROR - Error insertando en Elasticsearch (eventos_por_comuna): cannot unpack non-iterable int object
+2025-07-02 03:24:27,444 - ERROR - ✗ resultados/eventos_por_comuna/part-r-00000 falló durante el procesamiento
+2025-07-02 03:24:27,444 - INFO - 
+============================================================
+2025-07-02 03:24:27,445 - INFO - PROCESANDO ARCHIVO: resultados/frecuencia_bloque_horario/part-r-00000
+2025-07-02 03:24:27,445 - INFO - TIPO DE DATOS: aggregated_results
+2025-07-02 03:24:27,445 - INFO - ============================================================
+2025-07-02 03:24:27,446 - INFO - Archivo cargado: 2 filas, 2 columnas
+2025-07-02 03:24:27,446 - INFO - Columnas encontradas: ['2', '99']
+2025-07-02 03:24:27,447 - WARNING - Estructura de columnas difiere de la esperada
+2025-07-02 03:24:27,447 - WARNING - Esperadas: ['bloque_horario', 'frecuencia']
+2025-07-02 03:24:27,447 - WARNING - Encontradas: ['2', '99']
+2025-07-02 03:24:27,450 - INFO - HEAD http://elasticsearch:9200/frecuencia_bloque_horario [status:404 duration:0.002s]
+2025-07-02 03:24:27,536 - INFO - PUT http://elasticsearch:9200/frecuencia_bloque_horario [status:200 duration:0.086s]
+2025-07-02 03:24:27,537 - INFO - Índice frecuencia_bloque_horario creado
+2025-07-02 03:24:27,538 - INFO - HEAD http://elasticsearch:9200/frecuencia_bloque_horario [status:200 duration:0.002s]
+2025-07-02 03:24:27,538 - INFO - Obteniendo claves existentes de frecuencia_bloque_horario...
+2025-07-02 03:24:27,542 - INFO - POST http://elasticsearch:9200/frecuencia_bloque_horario/_search?scroll=2m [status:200 duration:0.003s]
+2025-07-02 03:24:27,543 - INFO - DELETE http://elasticsearch:9200/_search/scroll [status:200 duration:0.001s]
+2025-07-02 03:24:27,543 - INFO - Encontrados 0 registros existentes en frecuencia_bloque_horario
+2025-07-02 03:24:27,544 - INFO - No hay registros existentes, insertando todos
+2025-07-02 03:24:27,569 - INFO - PUT http://elasticsearch:9200/_bulk [status:200 duration:0.023s]
+2025-07-02 03:24:27,569 - ERROR - Error insertando en Elasticsearch (frecuencia_bloque_horario): cannot unpack non-iterable int object
+2025-07-02 03:24:27,570 - ERROR - ✗ resultados/frecuencia_bloque_horario/part-r-00000 falló durante el procesamiento
+2025-07-02 03:24:27,570 - INFO - 
+============================================================
+2025-07-02 03:24:27,570 - INFO - PROCESANDO ARCHIVO: resultados/frecuencia_comuna_tipo/part-r-00000
+2025-07-02 03:24:27,570 - INFO - TIPO DE DATOS: aggregated_results
+2025-07-02 03:24:27,570 - INFO - ============================================================
+2025-07-02 03:24:27,572 - INFO - Archivo cargado: 87 filas, 3 columnas
+2025-07-02 03:24:27,572 - INFO - Columnas encontradas: ['buin', 'hazard', '1']
+2025-07-02 03:24:27,572 - WARNING - Estructura de columnas difiere de la esperada
+2025-07-02 03:24:27,572 - WARNING - Esperadas: ['comuna', 'type', 'frecuencia']
+2025-07-02 03:24:27,572 - WARNING - Encontradas: ['buin', 'hazard', '1']
+2025-07-02 03:24:27,573 - ERROR - Error procesando archivo resultados/frecuencia_comuna_tipo/part-r-00000: Index(['type', 'comuna'], dtype='object')
+2025-07-02 03:24:27,573 - ERROR - ✗ resultados/frecuencia_comuna_tipo/part-r-00000 falló durante el procesamiento
+2025-07-02 03:24:27,573 - INFO - 
+================================================================================
+2025-07-02 03:24:27,574 - INFO - RESUMEN FINAL DE LA INSERCIÓN
+2025-07-02 03:24:27,574 - INFO - ================================================================================
+2025-07-02 03:24:27,574 - INFO - Archivos procesados exitosamente: 0/10
+2025-07-02 03:24:27,574 - INFO - 
+📊 RAW DATA:
+2025-07-02 03:24:27,574 - INFO -   ✗ ERROR - alertas.csv
+2025-07-02 03:24:27,574 - INFO -   ✗ ERROR - jams.csv
+2025-07-02 03:24:27,574 - INFO - 
+📊 PROCESSED DATA:
+2025-07-02 03:24:27,575 - INFO -   ✗ ERROR - alertas_resultado.csv
+2025-07-02 03:24:27,575 - INFO -   ✗ ERROR - jams_resultado.csv
+2025-07-02 03:24:27,575 - INFO - 
+📊 AGGREGATED RESULTS:
+2025-07-02 03:24:27,575 - INFO -   ✗ ERROR - resultados/accidentes_por_comuna/part-r-00000
+2025-07-02 03:24:27,575 - INFO -   ✗ ERROR - resultados/atascos_por_ciudad/part-r-00000
+2025-07-02 03:24:27,575 - INFO -   ✗ ERROR - resultados/eventos_por_calle/part-r-00000
+2025-07-02 03:24:27,575 - INFO -   ✗ ERROR - resultados/eventos_por_comuna/part-r-00000
+2025-07-02 03:24:27,575 - INFO -   ✗ ERROR - resultados/frecuencia_bloque_horario/part-r-00000
+2025-07-02 03:24:27,576 - INFO -   ✗ ERROR - resultados/frecuencia_comuna_tipo/part-r-00000
+2025-07-02 03:24:27,576 - INFO - 
+ESTADÍSTICAS FINALES DE LOS ÍNDICES:
+2025-07-02 03:24:27,576 - INFO - --------------------------------------------------
+2025-07-02 03:24:27,576 - INFO - 
+📂 Datos Raw:
+2025-07-02 03:24:27,578 - INFO - HEAD http://elasticsearch:9200/alertas_scrapper [status:200 duration:0.002s]
+2025-07-02 03:24:27,599 - INFO - GET http://elasticsearch:9200/alertas_scrapper/_stats [status:200 duration:0.021s]
+2025-07-02 03:24:27,600 - INFO -   alertas_scrapper:
+2025-07-02 03:24:27,600 - INFO -     📊 Documentos: 0
+2025-07-02 03:24:27,600 - INFO -     💾 Tamaño: 0.00 MB
+2025-07-02 03:24:27,601 - INFO - HEAD http://elasticsearch:9200/jams_scrapper [status:200 duration:0.001s]
+2025-07-02 03:24:27,604 - INFO - GET http://elasticsearch:9200/jams_scrapper/_stats [status:200 duration:0.002s]
+2025-07-02 03:24:27,604 - INFO -   jams_scrapper:
+2025-07-02 03:24:27,604 - INFO -     📊 Documentos: 0
+2025-07-02 03:24:27,604 - INFO -     💾 Tamaño: 0.08 MB
+2025-07-02 03:24:27,604 - INFO - 
+📂 Datos Procesados:
+2025-07-02 03:24:27,606 - INFO - HEAD http://elasticsearch:9200/alertas_filtrado [status:200 duration:0.001s]
+2025-07-02 03:24:27,608 - INFO - GET http://elasticsearch:9200/alertas_filtrado/_stats [status:200 duration:0.002s]
+2025-07-02 03:24:27,608 - INFO -   alertas_filtrado:
+2025-07-02 03:24:27,608 - INFO -     📊 Documentos: 0
+2025-07-02 03:24:27,609 - INFO -     💾 Tamaño: 0.04 MB
+2025-07-02 03:24:27,610 - INFO - HEAD http://elasticsearch:9200/jams_filtrado [status:200 duration:0.001s]
+2025-07-02 03:24:27,612 - INFO - GET http://elasticsearch:9200/jams_filtrado/_stats [status:200 duration:0.002s]
+2025-07-02 03:24:27,613 - INFO -   jams_filtrado:
+2025-07-02 03:24:27,613 - INFO -     📊 Documentos: 0
+2025-07-02 03:24:27,613 - INFO -     💾 Tamaño: 0.09 MB
+2025-07-02 03:24:27,613 - INFO - 
+📂 Resultados Agregados:
+2025-07-02 03:24:27,614 - INFO - HEAD http://elasticsearch:9200/accidentes_por_comuna [status:200 duration:0.001s]
+2025-07-02 03:24:27,617 - INFO - GET http://elasticsearch:9200/accidentes_por_comuna/_stats [status:200 duration:0.002s]
+2025-07-02 03:24:27,617 - INFO -   accidentes_por_comuna:
+2025-07-02 03:24:27,617 - INFO -     📊 Documentos: 0
+2025-07-02 03:24:27,617 - INFO -     💾 Tamaño: 0.00 MB
+2025-07-02 03:24:27,619 - INFO - HEAD http://elasticsearch:9200/atascos_por_ciudad [status:200 duration:0.001s]
+2025-07-02 03:24:27,621 - INFO - GET http://elasticsearch:9200/atascos_por_ciudad/_stats [status:200 duration:0.002s]
+2025-07-02 03:24:27,621 - INFO -   atascos_por_ciudad:
+2025-07-02 03:24:27,621 - INFO -     📊 Documentos: 0
+2025-07-02 03:24:27,622 - INFO -     💾 Tamaño: 0.00 MB
+2025-07-02 03:24:27,624 - INFO - HEAD http://elasticsearch:9200/eventos_por_calle [status:200 duration:0.002s]
+2025-07-02 03:24:27,628 - INFO - GET http://elasticsearch:9200/eventos_por_calle/_stats [status:200 duration:0.004s]
+2025-07-02 03:24:27,629 - INFO -   eventos_por_calle:
+2025-07-02 03:24:27,630 - INFO -     📊 Documentos: 0
+2025-07-02 03:24:27,632 - INFO -     💾 Tamaño: 0.00 MB
+2025-07-02 03:24:27,637 - INFO - HEAD http://elasticsearch:9200/eventos_por_comuna [status:200 duration:0.003s]
+2025-07-02 03:24:27,640 - INFO - GET http://elasticsearch:9200/eventos_por_comuna/_stats [status:200 duration:0.003s]
+2025-07-02 03:24:27,640 - INFO -   eventos_por_comuna:
+2025-07-02 03:24:27,641 - INFO -     📊 Documentos: 0
+2025-07-02 03:24:27,641 - INFO -     💾 Tamaño: 0.00 MB
+2025-07-02 03:24:27,643 - INFO - HEAD http://elasticsearch:9200/frecuencia_bloque_horario [status:200 duration:0.002s]
+2025-07-02 03:24:27,646 - INFO - GET http://elasticsearch:9200/frecuencia_bloque_horario/_stats [status:200 duration:0.003s]
+2025-07-02 03:24:27,647 - INFO -   frecuencia_bloque_horario:
+2025-07-02 03:24:27,647 - INFO -     📊 Documentos: 0
+2025-07-02 03:24:27,647 - INFO -     💾 Tamaño: 0.00 MB
+2025-07-02 03:24:27,650 - INFO - HEAD http://elasticsearch:9200/frecuencia_comuna_tipo [status:404 duration:0.002s]
+2025-07-02 03:24:27,650 - INFO -   frecuencia_comuna_tipo: No existe
+2025-07-02 03:24:27,650 - WARNING - 
+PROCESO COMPLETADO CON ERRORES
+2025-07-02 03:24:27,650 - WARNING - 10 archivos tuvieron problemas
+2025-07-02 03:24:27,651 - INFO - ================================================================================

@@ -126,6 +126,22 @@ services:
       - "5601:5601"
     networks:
       - default
+  data_inserter:
+    build:
+      context: ./DataInserter
+      dockerfile: Dockerfile
+    container_name: data_inserter
+    depends_on:
+      - elasticsearch
+    working_dir: /app
+    volumes:
+      - ./data_host:/datos
+      - ./DataInserter:/app
+    networks:
+      - default
+    environment:
+      - ELASTICSEARCH_HOST=elasticsearch
+      - ELASTICSEARCH_PORT=9200
 
 volumes:
   esdata:
